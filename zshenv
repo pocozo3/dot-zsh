@@ -41,4 +41,3 @@ case ${OSTYPE} in
         source ${ZDOTDIR}/zshenv.linux
         ;;
 esac
-

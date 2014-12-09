@@ -1,1 +1,13 @@
 #!/bin/zsh
+#
+# zlogout.cygwin: Windows用 zsh 終了時の設定
+#
+################################################################################
+
+#========================================
+# zsh 終了時の設定
+
+## ssh-pageant の設定
+if [ -x /usr/bin/ssh-pageant -a ! -z "$SSH_PAGEANT_PID" ]; then
+    eval $(/usr/local/bin/ssh-pageant -qk 2>/dev/null)
+fi
