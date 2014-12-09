@@ -35,10 +35,10 @@ export ZDOTDIR="${HOME}/.zsh.d"
 
 case ${OSTYPE} in
     cygwin*) # Windows用設定
-        source ${HOME}/zshenv.cygwin
+        source ${ZDOTDIR}/zshenv.cygwin
         ;;
     linux*) # Linux用設定
-        source ${HOME}/zshenv.linux
+        source ${ZDOTDIR}/zshenv.linux
         ;;
 esac
 
