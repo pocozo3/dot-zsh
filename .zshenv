@@ -24,6 +24,12 @@ else
     export PAGER="less"
 fi
 
+## lvのオプション
+### -c: ANSIエスケープシーケンスの色付けなどを有効にする。
+### -l: 1行が長くと折り返されていても1行として扱う。
+###     （コピーしたときに余計な改行を入れない）
+export LV="-c -l"
+
 ## エディタの設定
 export EDITOR="emacsclient"
 

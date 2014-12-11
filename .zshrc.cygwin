@@ -1,1 +1,14 @@
 #!/bin/zsh
+#
+# zshrc.cygwin: Windows用 インタラクティブな zsh 実行時の設定
+#
+################################################################################
+
+#========================================
+# 実行時処理
+
+## ssh-pageant の設定
+if [ -z "$SSH_AUTH_SOCK" -a -x /usr/local/bin/ssh-pageant ]; then
+    eval $(/usr/local/bin/ssh-pageant -q)
+fi
+trap logout HUP

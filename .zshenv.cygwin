@@ -13,4 +13,3 @@ export GIT_SSH="plink.exe"
 
 ## タイムゾーンの設定
 export TZ="JST-9"
-

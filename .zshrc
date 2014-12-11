@@ -146,7 +146,7 @@ setopt no_beep
 #========================================
 # エイリアスの設定
 
-## ls系
+## lsコマンドの設定
 alias ls='ls -aF --color=auto'
 alias la='ls -laFh --color=auto --group-directories-first'
 
@@ -159,6 +159,34 @@ alias history='history -i'
 alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -i'
+
+## lvの設定
+if [ "$PAGER" != "lv" ]; then
+    ### lvがなくてもlvでページャーを起動する。
+    alias lv="$PAGER"
+else
+    alias lv='lv -c -l'
+fi
+
+## grepの設定
+### grepのバージョンを検出。
+grep_version="$(grep --version | head -n 1 | sed -e 's/^[^0-9.]*\([0-9.]*\)[^0-9.]*$/\1/')"
+### バイナリファイルにはマッチさせない。
+MY_GREP_OPTIONS="--binary-files=without-match"
+### 拡張子が.tmpのファイルは無視する。
+MY_GREP_OPTIONS="--exclude=\*.tmp $MY_GREP_OPTIONS"
+### 管理用ディレクトリを無視する。
+if grep --help 2>&1 | grep -q -- --exclude-dir; then
+    MY_GREP_OPTIONS="--exclude-dir=.svn $MY_GREP_OPTIONS"
+    MY_GREP_OPTIONS="--exclude-dir=.git $MY_GREP_OPTIONS"
+    MY_GREP_OPTIONS="--exclude-dir=.deps $MY_GREP_OPTIONS"
+    MY_GREP_OPTIONS="--exclude-dir=.libs $MY_GREP_OPTIONS"
+fi
+### 可能なら色を付ける。
+if grep --help 2>&1 | grep -q -- --color; then
+    MY_GREP_OPTIONS="--color=auto $MY_GREP_OPTIONS"
+fi
+alias grep="grep $MY_GREP_OPTIONS"
 
 #========================================
 # 環境依存のカスタマイズ読み込み
