@@ -9,9 +9,9 @@
 
 case ${OSTYPE} in
     cygwin*) # Windows用設定
-        source ${ZDOTDIR}/zlogout.cygwin
+        source ${ZDOTDIR}/.zlogout.cygwin
         ;;
     linux*) # Linux用設定
-        source ${ZDOTDIR}/zlogout.linux
+        source ${ZDOTDIR}/.zlogout.linux
         ;;
 esac

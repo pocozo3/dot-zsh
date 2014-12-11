@@ -165,9 +165,9 @@ alias rm='rm -i'
 
 case ${OSTYPE} in
     cygwin*) # Windows用設定
-        source ${ZDOTDIR}/zshrc.cygwin
+        source ${ZDOTDIR}/.zshrc.cygwin
         ;;
     linux*) # Linux用設定
-        source ${ZDOTDIR}/zshrc.linux
+        source ${ZDOTDIR}/.zshrc.linux
         ;;
 esac
