@@ -4,3 +4,4 @@
 # Git で管理しないファイル/ディレクトリのリスト
 .zcompdump
 .zcompcache/
+*.zwc

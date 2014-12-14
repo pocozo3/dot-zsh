@@ -433,6 +433,14 @@ alias -g S='| sed'
 alias -g N='| nkf -w'
 
 #========================================
+# zshrc のコンパイル設定
+
+## .zshrc.zwc が存在する、かつ .zshrc の方が新しい時に自動コンパイルする。
+if [ ${ZDOTDIR}/.zshrc -nt ${ZDOTDIR}/.zshrc.zwc ]; then
+   zcompile ${ZDOTDIR}/.zshrc
+fi
+
+#========================================
 # 環境依存のカスタマイズ読み込み
 
 case ${OSTYPE} in
