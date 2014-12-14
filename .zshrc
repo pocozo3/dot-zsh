@@ -18,6 +18,13 @@ colors
 autoload -Uz add-zsh-hook
 
 #========================================
+# 色の設定
+
+## LS_COLORS の設定をする。
+### git@github.com:seebi/dircolors-solarized.git
+eval $(dircolors ${ZDOTDIR}/dircolors-solarized/dircolors.256dark)
+
+#========================================
 # コマンドライン編集に関する設定
 
 ## Emacsキーバインドを使う。
@@ -35,22 +42,25 @@ zstyle ':zle:*' word-style unspecified
 ### 例 : mkdir {1-3} で フォルダ1, 2, 3を作れる。
 setopt brace_ccl
 
+## コマンドラインでの#以降をコメントと見なす。
+setopt interactive_comments
+
+## 範囲指定できるようにする
+### 例 : mkdir {1-3} で フォルダ1, 2, 3を作れる
+setopt brace_ccl
+
 #========================================
 # ディレクトリ移動に関する設定
 
 ## ディレクトリ名だけでcdする。
 setopt auto_cd
-
 ## cdで移動してもpushdと同じようにディレクトリスタックに追加する。
 setopt auto_pushd
-
 ## カレントディレクトリ中に指定されたディレクトリが見つからなかった場合に
-## 移動先を検索するリスト。
+### 移動先を検索するリスト。
 cdpath=(~)
-
 ## ディレクトリが変わったらディレクトリスタックを表示。
 chpwd_functions=($chpwd_functions dirs)
-
 ## 同じディレクトリを pushd しない。
 setopt pushd_ignore_dups
 
@@ -59,34 +69,25 @@ setopt pushd_ignore_dups
 
 ## 履歴を保存するファイル
 HISTFILE=~/.zsh_history
-
 ## メモリ上の履歴数。
 HISTSIZE=100000
-
 ## 保存する履歴数
 SAVEHIST=$HISTSIZE
 
 ## zshプロセス間で履歴を共有する。
 setopt share_history
-
 ## 履歴ファイルにコマンドラインだけではなく実行時刻と実行時間も保存する。
 setopt extended_history
-
 ## 同じコマンドラインを連続で実行した場合は履歴に登録しない。
 setopt hist_ignore_dups
-
 ## すでに同じコマンドがある場合は履歴に登録しない。
 setopt hist_ignore_all_dups
-
 ## 重複するコマンドが保存される時、古い方を削除する。
 setopt hist_save_no_dups
-
 ## すぐに履歴ファイルに追記する。
 setopt inc_append_history
-
 ## スペースで始まるコマンドラインは履歴に追加しない。
 setopt hist_ignore_space
-
 ## 履歴関連のコマンドは履歴に追加しない。
 setopt hist_no_store
 
@@ -102,7 +103,7 @@ bindkey "^r" history-incremental-pattern-search-backward
 bindkey "^s" history-incremental-pattern-search-forward
 
 #========================================
-# 補完機能に関する設定
+# 補完機能・ファイル名グロブに関する設定
 
 ## 補完機能を有効化する。
 autoload -Uz compinit
@@ -111,25 +112,88 @@ compinit
 ## 補完侯補をメニューから選択する。
 ### select=2: 補完候補を一覧から選択する。
 ###           ただし、補完候補が2つ以上なければすぐに補完する。
-zstyle ':completion:*:default' menu select=2
+### interactive: 補完候補を一覧から選択する。
+###              補完候補メニューの中からインタラクティブに選択する。
+zstyle ':completion:*:default' menu select interactive
 
 ## 補完候補がなければより曖昧に候補を探す。
 ### m:{a-z}={A-Z}: 小文字を大文字に変えたものでも補完。
 ### r:|[._-]=*: 「.」「_」「-」の前にワイルドカード「*」があるものとして補完。
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|[._-]=* r:|=* l:|=*'
 
+### 補完候補をキャッシュする。
+zstyle ':completion:*' use-cache yes
+
+## 詳細な情報を使う。
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*' word yes
+
+## 補完方法の設定。指定した順番に実行する。
+### _oldlist 前回の補完結果を再利用する。
+### _complete: 補完する。
+### _match: globを展開しないで候補の一覧から補完する。
+### _ignored: 補完候補にださないと指定したものも補完候補とする。
+### _approximate: 似ている補完候補も補完候補とする。
+### _prefix: カーソル以降を無視してカーソル位置までで補完する。
+### _expand: グロブや変数の展開を行う。
+###          もともとあった展開と比べて、細かい制御が可能。
+### _history: 履歴から補完を行う。
+zstyle ':completion:*' completer _oldlist _expand _complete _match _prefix _approximate _list _history
+
+## 展開する前に補完候補上にカーソルを出す。
+bindkey "^I" menu-complete
 ## Shift-Tabで補完候補を逆順する("\e[Z"でも動作する)。
 bindkey '^[[Z' reverse-menu-complete
 
-#========================================
-# 色の設定 (ls・補完候補)
+## カーソル位置で補完する。
+setopt complete_in_word
+## 補完時にヒストリを自動的に展開する。
+setopt hist_expand
+## --prefix=~/localというように「=」の後でも
+### 「~」や「=コマンド」などのファイル名展開を行う。
+setopt magic_equal_subst
+## カッコの対応などを自動的に補完。
+setopt auto_param_keys
+## ディレクトリ名の補完で末尾に/を自動的に付加。
+setopt auto_param_slash
+## パスの最後の/を削除しない。
+setopt noautoremoveslash
+## カーソル位置は保持したままファイル名一覧を順次その場で表示。
+setopt always_last_prompt
+## 補完候補一覧でファイルの種別を識別マーク(ls -F の記号)表示。
+setopt list_types
 
-## LS_COLORS の設定をする。
-### git@github.com:seebi/dircolors-solarized.git
-eval $(dircolors ${ZDOTDIR}/dircolors-solarized/dircolors.256dark)
+## globを展開しないで候補の一覧から補完する。
+setopt glob_complete
+## 辞書順ではなく数字順に並べる。
+setopt numeric_glob_sort
+## 拡張globを有効にする。
+### glob中で「(#...)」という書式で指定する。
+setopt extended_glob
+## globでパスを生成したときに、パスがディレクトリだったら最後に「/」をつける。
+setopt mark_dirs
+## 明確なドットの指定なしで.から始まるファイルをマッチ。
+setopt globdots
 
-## LS_COLORS を補完候補に適用する。
+## 補完リストの表示指定。
+### 詳細な情報を使う。
+zstyle ':completion:*' verbose yes
+### LS_COLORS を補完候補に適用する。
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+### 補完候補のリスト項目名
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' auto-description "%{${fg[yellow]}%}%S%B%Specify:%s%{${fg[yellow]}%} %d%b%{${reset_color}%}"
+zstyle ':completion:*:descriptions' format "%{${fg[green]}%}%S%BCompleting:%s%{${fg[green]}%} %d%b%{${reset_color}%}"
+zstyle ':completion:*:messages' format "%{${fg[yellow]}%}%B%d%b%{${reset_color}%}"
+zstyle ':completion:*:warnings' format "%{${fg[red]}%}%S%BNo matches for:%s%{${fg[yellow]}%} %d%b%{${reset_color}%}"
+zstyle ':completion:*:corrections' format "%{${fg[yellow]}%}%B%d %{${fg[red]}%}(errors: %e)%b%{${reset_color}%}"
+zstyle ':completion:*:options' description 'yes'
+zstyle ':completion:*' list-prompt "%{${fg[blue]}%}%S%BAt %p: Hit TAB for more, or the character to insert%b%s%{${reset_color}%}"
+zstyle ':completion:*' select-prompt "%{${fg[blue]}%}%S%BScrolling active: current selection at %p%b%s%{${reset_color}%}"
+### manの補完をセクション番号別に表示させる。
+zstyle ':completion:*:manuals' separate-sections true
+### オブジェクトファイルとか中間ファイルとかはfileとして補完させない。
+zstyle ':completion:*:*files' ignored-patterns '*?.o' '*?~' '*\#'
 
 #========================================
 # バージョン管理システム情報取得の設定
@@ -297,15 +361,14 @@ add-zsh-hook precmd update_prompt
 
 ## 日本語ファイル名を表示可能にする。
 setopt print_eight_bit
-
 ## C-sでの検索が潰されてしまうため、出力停止・開始用にC-s/C-qを使わない。
 setopt no_flow_control
-
 ## ^Dでログアウトしないようにする。
 setopt ignore_eof
-
 ## beep を鳴らさない
 setopt no_beep
+## 補完候補表示時にビープ音を鳴らさない。
+setopt nolistbeep
 
 #========================================
 # エイリアスの設定
@@ -351,6 +414,14 @@ if grep --help 2>&1 | grep -q -- --color; then
     MY_GREP_OPTIONS="--color=auto $MY_GREP_OPTIONS"
 fi
 alias grep="grep $MY_GREP_OPTIONS"
+
+## グローバルエイリアス
+alias -g L="|& $PAGER"
+alias -g G='| grep'
+alias -g H='| head'
+alias -g T='| tail'
+alias -g S='| sed'
+alias -g N='| nkf -w'
 
 #========================================
 # 環境依存のカスタマイズ読み込み
