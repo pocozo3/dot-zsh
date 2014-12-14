@@ -10,6 +10,9 @@
 ## 環境変数
 export LANG="ja_JP.UTF-8"
 
+## プラグイン等のパスを追加。
+fpath=(${ZDOTDIR}/zsh-completions/src $fpath)
+
 ## 色を使えるようにする。
 autoload -Uz colors
 colors
