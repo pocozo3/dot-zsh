@@ -418,6 +418,12 @@ if grep --help 2>&1 | grep -q -- --color; then
 fi
 alias grep="grep $MY_GREP_OPTIONS"
 
+## Emacsの設定
+### emacsclient
+alias emc='emacsclient'
+### emacs をターミナル上で開く
+alias emacsnw='TERM=xterm-16color emacs -nw'
+
 ## グローバルエイリアス
 alias -g L="|& $PAGER"
 alias -g G='| grep'
