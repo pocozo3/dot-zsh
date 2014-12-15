@@ -7,6 +7,13 @@
 #========================================
 # 実行時処理
 
+## Ruby (rbenv) の設定
+if [ -d ${HOME}/.rbenv  ] ; then
+    PATH=${HOME}/.rbenv/bin:${PATH}
+    export PATH
+    eval "$(rbenv init -)"
+fi
+
 ## ssh-pageant の設定
 if [ -z "$SSH_AUTH_SOCK" -a -x /usr/local/bin/ssh-pageant ]; then
     eval $(/usr/local/bin/ssh-pageant -q)
