@@ -110,7 +110,7 @@ bindkey "^s" history-incremental-pattern-search-forward
 
 ## 補完機能を有効化する。
 autoload -Uz compinit
-compinit
+compinit -u
 
 ## 補完侯補をメニューから選択する。
 ### select=2: 補完候補を一覧から選択する。
