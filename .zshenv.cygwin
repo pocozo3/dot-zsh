@@ -13,3 +13,6 @@ export GIT_SSH="plink.exe"
 
 ## タイムゾーンの設定
 export TZ="JST-9"
+
+## エディタの設定
+export EDITOR="/d/gnupack/startup_emacsclient.exe"
