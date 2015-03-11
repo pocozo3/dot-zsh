@@ -15,4 +15,4 @@ export GIT_SSH="plink.exe"
 export TZ="JST-9"
 
 ## エディタの設定
-export EDITOR="/d/gnupack/startup_emacsclient.exe"
+export EDITOR="startup_emacsclient.exe"
