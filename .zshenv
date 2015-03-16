@@ -40,9 +40,6 @@ export LV="-c -l"
 ### -X: 表示させていた画面をそのまま残す
 export LESS="-F -i -M -R -S -X"
 
-## エディタの設定
-export EDITOR="emacsclient"
-
 ## zsh 設定ファイル用ディレクトリの設定
 export ZDOTDIR="${HOME}/.zsh.d"
 
