@@ -9,3 +9,6 @@
 
 ## エディタの設定
 source ${HOME}/.editor
+
+## Google Chrome 起動オプション
+source ${HOME}/.chromium_flags
