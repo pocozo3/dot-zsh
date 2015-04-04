@@ -21,3 +21,8 @@ case $TERM in
     *)
         ;;
 esac
+
+## 初回起動時のみ SSH 用のキーをエージェントに登録する
+if [ -e ${HOME}/.add_ssh_key ]; then
+    source ${HOME}/.add_ssh_key
+fi

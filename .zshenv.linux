@@ -8,13 +8,19 @@
 # 環境変数
 
 ## GNOME Keyring を利用できるようにする
-if [ -n "$DESKTOP_SESSION" ];then
+if [ -n "$DESKTOP_SESSION" ]; then
     eval $(gnome-keyring-daemon --start)
     export SSH_AUTH_SOCK
 fi
 
 ## エディタの設定
-source ${HOME}/.editor
+if [ -e ${HOME}/.editor ]; then
+    source ${HOME}/.editor
+else
+    export EDITOR="/usr/bin/nano"
+fi
 
 ## Google Chrome 起動オプション
-source ${HOME}/.chromium_flags
+if [ -e ${HOME}/.chromium_flags ]; then
+    source ${HOME}/.chromium_flags
+fi
