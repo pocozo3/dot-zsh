@@ -7,6 +7,12 @@
 #========================================
 # 環境変数
 
+## GNOME Keyring を利用できるようにする
+if [ -n "$DESKTOP_SESSION" ];then
+    eval $(gnome-keyring-daemon --start)
+    export SSH_AUTH_SOCK
+fi
+
 ## エディタの設定
 source ${HOME}/.editor
 
