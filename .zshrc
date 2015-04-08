@@ -424,6 +424,9 @@ alias emc='emacsclient'
 ### emacs をターミナル上で開く
 alias emacsnw='TERM=xterm-16color emacs -nw'
 
+## Gitの設定
+alias g='git'
+
 ## グローバルエイリアス
 alias -g L="|& $PAGER"
 alias -g G='| grep'
