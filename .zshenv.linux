@@ -17,8 +17,11 @@ fi
 if [ -e ${HOME}/.editor ]; then
     source ${HOME}/.editor
 else
-    export EDITOR="/usr/bin/nano"
+    export EDITOR="/usr/bin/nano -w"
 fi
+
+## visudo を使う際のエディタの指定
+export VISUAL="/usr/bin/nano -w"
 
 ## Google Chrome 起動オプション
 if [ -e ${HOME}/.chromium_flags ]; then
