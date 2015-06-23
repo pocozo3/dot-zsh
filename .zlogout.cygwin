@@ -8,6 +8,6 @@
 # zsh 終了時の設定
 
 ## ssh-pageant の設定
-if [ -x /usr/local/bin/ssh-pageant -a ! -z "$SSH_PAGEANT_PID" ]; then
-    eval $(/usr/local/bin/ssh-pageant -qk 2>/dev/null)
+if [ -x /usr/local/bin/ssh-pageant -a -n "$SSH_PAGEANT_PID" ]; then
+    eval $(/usr/local/bin/ssh-pageant -q -k 2>/dev/null)
 fi
