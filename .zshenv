@@ -47,8 +47,11 @@ export ZDOTDIR="${HOME}/.zsh.d"
 # 環境依存のカスタマイズ読み込み
 
 case ${OSTYPE} in
-    cygwin*) # Windows用設定
+    cygwin*) # Cygwin用設定
         source ${ZDOTDIR}/.zshenv.cygwin
+        ;;
+    msys*) # MSYS2用設定
+        source ${ZDOTDIR}/.zshenv.msys
         ;;
     linux*) # Linux用設定
         source ${ZDOTDIR}/.zshenv.linux

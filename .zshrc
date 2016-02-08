@@ -447,8 +447,11 @@ fi
 # 環境依存のカスタマイズ読み込み
 
 case ${OSTYPE} in
-    cygwin*) # Windows用設定
+    cygwin*) # Cygwin用設定
         source ${ZDOTDIR}/.zshrc.cygwin
+        ;;
+    msys*) # MSYS2用設定
+        source ${ZDOTDIR}/.zshrc.msys
         ;;
     linux*) # Linux用設定
         source ${ZDOTDIR}/.zshrc.linux
