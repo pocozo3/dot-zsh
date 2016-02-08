@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# zshenv.cygwin: Windows用 zsh 実行時の設定
+# zshenv.msys: MSYS2用 zsh 実行時の設定
 #
 ################################################################################
 
@@ -11,4 +11,3 @@
 export TZ="JST-9"
 
 ## エディタの設定
-export EDITOR="emacsclientw -n -s /tmp/server"

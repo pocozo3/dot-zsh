@@ -1,26 +1,17 @@
 #!/bin/zsh
 #
-# zshrc.cygwin: Windows用 インタラクティブな zsh 実行時の設定
+# zshrc.msys: MSYS2用 インタラクティブな zsh 実行時の設定
 #
 ################################################################################
 
 #========================================
 # エイリアスの設定
-### emacs 関連
-alias emc='emacsclientw -n -s /tmp/server'
 
 #========================================
 # 実行時処理
 
-## Ruby (rbenv) の設定
-if [ -d ${HOME}/.rbenv  ] ; then
-    PATH=${HOME}/.rbenv/bin:${PATH}
-    export PATH
-    eval "$(rbenv init -)"
-fi
-
 ## ssh-pageant の設定
-if [ -z "$SSH_AUTH_SOCK" -a -x /usr/local/bin/ssh-pageant ]; then
-    eval $(/usr/local/bin/ssh-pageant -q -r -a "/tmp/.ssh-pageant-$USERNAME")
+if [ -z "$SSH_AUTH_SOCK" -a -x /usr/bin/ssh-pageant ]; then
+    eval $(/usr/bin/ssh-pageant -q -r -a "/tmp/.ssh-pageant-$USERNAME")
 fi
 trap logout HUP
